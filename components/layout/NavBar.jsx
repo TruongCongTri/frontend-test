@@ -31,7 +31,7 @@ export default function NavBar({ isAuthenticated = false, phoneData = null }) {
           {/* Logo */}
           <Link
             href="/"
-            className="text-white font-bold text-xl"
+            className="font-bold text-xl text-[#00ff88]"
             onClick={handleClose}
           >
             <span className="md:hidden">GS</span>

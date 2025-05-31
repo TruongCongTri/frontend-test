@@ -25,6 +25,7 @@
  * @property {string} html_url
  * @property {string} repos_url
  * @property {number} followers
+ * @property {number} following
  *
  * @typedef {Object} Pagination
  * @property {number} current_page
@@ -54,8 +55,8 @@
  * @typedef {Object} GetUserProfileResponse
  * @property {{ user: UserProfile }} data
  * @property {{ success: boolean, message: string }} meta
- *
- * @typedef {Object} GetLikeGithubResponse
- * @property {{ user: LikedPayload }} data
- * @property {{ success: boolean, message: string }} meta
+//  *
+//  * @typedef {Object} GetLikeGithubResponse
+//  * @property {{ user: LikedPayload }} data
+//  * @property {{ success: boolean, message: string }} meta
  */
