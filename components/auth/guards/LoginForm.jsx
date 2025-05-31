@@ -114,7 +114,7 @@ export default function LoginForm() {
 
   return (
     <div>
-      <label>Enter Phone Number:</label>
+      <label className="text-sm md:text-base">Enter Phone Number:</label>
       <PhoneNumberField
         value={phone}
         onChange={setPhone}
@@ -125,26 +125,26 @@ export default function LoginForm() {
         <button
           onClick={handlePhoneSubmit}
           disabled={isLoading || !phone.trim()}
-          className={`${
+          className={`w-full text-sm md:text-base ${
             !phone.trim() || isLoading
               ? "opacity-50 cursor-not-allowed"
-              : "cursor-pointer"
+              : "cursor-pointer hover:bg-[#00ff88] hover:text-black transition-colors"
           }`}
         >
           {isLoading ? "Sending..." : "Generate Access Code"}
         </button>
       ) : (
         <>
-          <label>Enter Access Code:</label>
+          <label className="text-sm md:text-base">Enter Access Code:</label>
           <OTPInput value={code} onChange={setCode} disabled={isLoading} />
           <div className="flex gap-4">
             <button
               onClick={handleCodeSubmit}
               disabled={!code.trim() || isLoading}
-              className={`${
+              className={`text-sm flex-1 md:text-base ${
                 !code.trim() || isLoading
                   ? "opacity-50 cursor-not-allowed"
-                  : "cursor-pointer"
+                  : "cursor-pointer hover:bg-[#00ff88] hover:text-black transition-colors"
               }`}
             >
               {isLoading ? "Validating..." : "Validate Code"}
@@ -152,10 +152,10 @@ export default function LoginForm() {
             <button
               onClick={handleResendCode}
               disabled={resendCooldown > 0 || isLoading}
-              className={`${
+              className={`text-sm flex-1 md:text-base ${
                 resendCooldown > 0 || isLoading
                   ? "opacity-50 cursor-not-allowed"
-                  : "cursor-pointer"
+                  : "cursor-pointer hover:bg-[#00ff88] hover:text-black transition-colors"
               }`}
             >
               {resendCooldown > 0 ? `Wait (${resendCooldown}s)` : "Resend Code"}
@@ -163,7 +163,7 @@ export default function LoginForm() {
           </div>
 
           {codeExpiry > 0 && (
-            <p className="text-yellow-300 mt-4 mb-4">
+            <p className="text-yellow-300 mt-4 mb-4 text-sm md:text-base text-center md:text-left">
               ⏳ Code expires in {Math.floor(codeExpiry / 60)}:
               {(codeExpiry % 60).toString().padStart(2, "0")}
             </p>
@@ -171,7 +171,11 @@ export default function LoginForm() {
         </>
       )}
 
-      {message && <p className="mt-4 text-[#00ffff]">{message}</p>}
+      {message && (
+        <p className="mt-4 text-[#00ffff] text-sm md:text-base text-center md:text-left">
+          {message}
+        </p>
+      )}
     </div>
   );
 }

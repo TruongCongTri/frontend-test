@@ -38,7 +38,10 @@ export default function SearchDrawer({ open, onClose }) {
     router.push(`/search?q=${encodeURIComponent(trimmed)}`);
     onClose();
   };
-
+  const handleSuggestionClick = (item) => {
+    router.push(`/search?q=${encodeURIComponent(item)}`);
+    onClose();
+  };
   return (
     <>
       {open && (

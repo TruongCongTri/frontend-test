@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 
+import { requireAuth } from "@/components/actions/auth";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
-import BreadcrumbWrapper from "@/components/navigation/BreadcrumbWrapper";
 
 import { searchGithubUsers } from "@/libs/api/apiFunction";
 import CardList from "@/components/ui/display/CardList";
@@ -14,12 +14,15 @@ import Breadcrumb from "@/components/navigation/Breadcrumb";
 import Loading from "@/components/layout/Loading";
 
 export default async function SearchPage({ searchParams }) {
+  // check if user is authenticated
+  await requireAuth();
+  
   const { q, page, per_page } = parseSearchParams(await searchParams);
 
   if (!q) {
     return (
       <LayoutWrapper>
-        <BreadcrumbWrapper />
+        <Breadcrumb />
         <p className="mb-2 text-sm text-gray-400">
           Please enter a search term.
         </p>
@@ -47,7 +50,7 @@ export default async function SearchPage({ searchParams }) {
     <Suspense fallback={<Loading />}>
       <LayoutWrapper>
         <Suspense fallback={<BreadcrumbSkeleton />}>
-          <BreadcrumbWrapper />
+          <Breadcrumb />
         </Suspense>
         {q && (
           <p className="mb-2 text-sm text-gray-400">
