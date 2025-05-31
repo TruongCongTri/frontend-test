@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
 import LoginButton from "@/components/ui/actions/LoginButton";
 import LogoutButton from "@/components/ui/actions/LogoutButton";
@@ -9,12 +9,18 @@ import SearchInputIcon from "@/components/form/fields/SearchIcon";
 import SearchDrawer from "./SearchDrawer";
 import ProfileButton from "@/components/ui/actions/ProfileButton";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function NavBar({ isAuthenticated = false, phoneData = null }) {
+  const currentPath = usePathname();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [drawerOpen, setSearchOpen] = useState(false);
   const handleClose = () => setMenuOpen(false);
-  const handleSearchClose = () => setSearchOpen(false);
+  const handleSearchClose = () => {
+    setSearchOpen(false);
+    setMenuOpen(false); // close nav if opening search
+  };
   const handleSearchOpen = () => {
     setSearchOpen(true);
     setMenuOpen(false); // close nav if opening search
@@ -118,13 +124,26 @@ export default function NavBar({ isAuthenticated = false, phoneData = null }) {
             </Link>
 
             {isAuthenticated && (
-              <Link
-                href="/dashboard"
-                onClick={handleClose}
-                className="text-white hover:text-terminalGreen"
-              >
-                Dashboard
-              </Link>
+              <>
+                <Link
+                  href="/search"
+                  onClick={handleClose}
+                  className={`text-white hover:text-green-600 ${
+                    currentPath.startsWith("/search") ? "text-green-600" : ""
+                  }`}
+                >
+                  Search
+                </Link>
+                <Link
+                  href="/dashboard"
+                  onClick={handleClose}
+                  className={`text-white hover:text-green-600 ${
+                    currentPath === "/dashboard" ? "text-green-600" : ""
+                  }`}
+                >
+                  Dashboard
+                </Link>
+              </>
             )}
           </div>
         </div>

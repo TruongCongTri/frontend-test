@@ -43,7 +43,7 @@ export default function DashboardTabs({ users }) {
               : "text-gray-400 hover:text-[#00ff88] hover:bg-gray-700 sm:hover:bg-transparent"
           }`}
         >
-          🐙 GitHub Profiles
+          🤖 GitHub Profiles
         </button>
       </div>
 

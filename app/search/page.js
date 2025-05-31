@@ -16,7 +16,7 @@ import Loading from "@/components/layout/Loading";
 export default async function SearchPage({ searchParams }) {
   // check if user is authenticated
   await requireAuth();
-  
+
   const { q, page, per_page } = parseSearchParams(await searchParams);
 
   if (!q) {
@@ -40,8 +40,6 @@ export default async function SearchPage({ searchParams }) {
       per_page: Number(per_page),
     });
     data = response.data;
-    console.log(data.data.users);
-    console.log(data.meta.pagination);
   } catch (err) {
     error = err?.message || "Something went wrong while fetching GitHub users.";
   }
