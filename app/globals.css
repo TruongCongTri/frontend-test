@@ -1,10 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&display=swap");
 @import "tailwindcss";
 
 /* base styling */
 body {
-  font-family: "Cascadia Mono", sans-serif;
-  font-style: normal;
   @apply bg-[#0c0c0c] text-[#00ff88] font-mono;
 }
 input,
