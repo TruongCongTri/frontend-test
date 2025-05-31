@@ -5,12 +5,24 @@ import Link from "next/link";
 import LoginButton from "@/components/ui/actions/LoginButton";
 import LogoutButton from "@/components/ui/actions/LogoutButton";
 import SearchInput from "@/components/form/fields/SearchInput";
+import SearchInputIcon from "@/components/form/fields/SearchIcon";
+import SearchDrawer from "./SearchDrawer";
 import ProfileButton from "@/components/ui/actions/ProfileButton";
 import { Menu, X } from "lucide-react";
 
 export default function NavBar({ isAuthenticated = false, phoneData = null }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [drawerOpen, setSearchOpen] = useState(false);
   const handleClose = () => setMenuOpen(false);
+  const handleSearchClose = () => setSearchOpen(false);
+  const handleSearchOpen = () => {
+    setSearchOpen(true);
+    setMenuOpen(false); // close nav if opening search
+  };
+  const handleMenu = () => {
+    setMenuOpen(!menuOpen); // toggle mobile nav
+    setSearchOpen(false); // close search drawer if opening nav
+  };
 
   return (
     <>
@@ -35,14 +47,19 @@ export default function NavBar({ isAuthenticated = false, phoneData = null }) {
           </div>
           <div>
             <div className="flex items-center gap-2">
+              {/* Mobile Search Icon */}
+              {isAuthenticated && (
+                <SearchInputIcon
+                  open={drawerOpen}
+                  onClose={handleSearchClose}
+                  onOpen={handleSearchOpen}
+                />
+              )}
+
               {/* Desktop & Tablet/Mobile Nav - Always visible */}
               <div className="flex items-center gap-4">
                 {isAuthenticated && (
                   <>
-                    {/* Search - Desktop hidden */}
-                    <div className="md:hidden">
-                      <SearchInput />
-                    </div>
                     {phoneData && (
                       <ProfileButton
                         country={phoneData.country}
@@ -63,7 +80,8 @@ export default function NavBar({ isAuthenticated = false, phoneData = null }) {
               {/* Toggle Nav - Tablet/Mobile */}
               <div className="md:hidden">
                 <button
-                  onClick={() => setMenuOpen(!menuOpen)}
+                  // onClick={() => setMenuOpen(!menuOpen)}
+                  onClick={handleMenu}
                   className="text-white"
                   aria-label="Toggle navigation"
                 >
@@ -100,18 +118,13 @@ export default function NavBar({ isAuthenticated = false, phoneData = null }) {
             </Link>
 
             {isAuthenticated && (
-              <>
-                <div onClick={handleClose}>
-                  <SearchInput />
-                </div>
-                <Link
-                  href="/dashboard"
-                  onClick={handleClose}
-                  className="text-white hover:text-terminalGreen"
-                >
-                  Dashboard
-                </Link>
-              </>
+              <Link
+                href="/dashboard"
+                onClick={handleClose}
+                className="text-white hover:text-terminalGreen"
+              >
+                Dashboard
+              </Link>
             )}
           </div>
         </div>
@@ -141,6 +154,11 @@ export default function NavBar({ isAuthenticated = false, phoneData = null }) {
           className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm sm:hidden transition-opacity duration-300"
           onClick={handleClose}
         />
+      )}
+
+      {/* Search Drawer (Mobile/Tablet) */}
+      {isAuthenticated && (
+        <SearchDrawer open={drawerOpen} onClose={() => setSearchOpen(false)} />
       )}
     </>
   );
